@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 //@NoArgsConstructor
 @ToString
 //@JsonIgnoreProperties(ignoreUnknown = true)
-class ChannelMsg implements Serializable {
+class MeasurementsMsg implements Serializable {
 
     private static final long serialVersionUID = -295422703255886286L;
 
@@ -29,18 +30,21 @@ class ChannelMsg implements Serializable {
     private String priority;
     private boolean secret;
     private Double measurement;
+    private BigDecimal temperature;
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime sendTime;
 
-    public ChannelMsg(@JsonProperty("mesage") String message,
-                      @JsonProperty("priority") String priority,
-                      @JsonProperty("secret") boolean secret,
-                      @JsonProperty("measurement") Double measurement,
-                      @JsonProperty("sendTime") LocalDateTime sendTime) {
+    public MeasurementsMsg(@JsonProperty("mesage") String message,
+                           @JsonProperty("priority") String priority,
+                           @JsonProperty("secret") boolean secret,
+                           @JsonProperty("measurement") Double measurement,
+                           @JsonProperty("temperature") BigDecimal temperature,
+                           @JsonProperty("sendTime") LocalDateTime sendTime) {
         this.message = message;
         this.priority = priority;
         this.secret = secret;
         this.measurement = measurement;
+        this.temperature = temperature;
         this.sendTime = sendTime;
     }
 

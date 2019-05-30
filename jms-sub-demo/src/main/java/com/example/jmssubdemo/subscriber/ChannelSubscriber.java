@@ -22,8 +22,8 @@ class ChannelSubscriber {
         this.responseService = responseService;
     }
 
-    @RabbitListener(queues = "${sub.messages.queue.name}")
-    public void msgListener(ChannelMsg receivedMsg) {
+    @RabbitListener(queues = "measurements")
+    public void msgListener(MeasurementsMsg receivedMsg) {
         log.info("Received receivedMsg from {} --> {}", measurementsQueue.getName(), receivedMsg);
         Message msg = new Message(receivedMsg);
         messageRepository.save(msg);

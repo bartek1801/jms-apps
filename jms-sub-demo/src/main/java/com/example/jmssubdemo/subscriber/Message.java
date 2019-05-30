@@ -1,14 +1,11 @@
 package com.example.jmssubdemo.subscriber;
 
-import com.example.jmssubdemo.subscriber.ChannelMsg;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -17,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Message {
+class Message {
 
     @Id
     private UUID uuid;
@@ -25,12 +22,16 @@ public class Message {
     private String priority;
     private boolean secret;
     private Double measurement;
+    private BigDecimal temperature;
+    private LocalDateTime sendTime;
 
-    public Message(ChannelMsg receivedMsg) {
+    Message(MeasurementsMsg receivedMsg) {
         this.uuid = UUID.randomUUID();
         this.message = receivedMsg.getMessage();
         this.priority = receivedMsg.getPriority();
         this.secret = receivedMsg.isSecret();
         this.measurement = receivedMsg.getMeasurement();
+        this.temperature = receivedMsg.getTemperature();
+        this.sendTime = receivedMsg.getSendTime();
     }
 }

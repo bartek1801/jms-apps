@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -15,28 +16,31 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @ToString
-class ChannelMsg implements Serializable {
+class ReadingsMsg implements Serializable {
 
     private static final long serialVersionUID = -295422703255886286L;
 
     private String message;
-    private String priority;
+    private Priority priority;
     private boolean secret;
     private Double measurement;
+    private BigDecimal temperature;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime sendTime;
 
 
-    public ChannelMsg(String message,
-                      String priority,
-                      boolean secret,
-                      Double measurement,
-                      LocalDateTime sendTime
+    ReadingsMsg(String message,
+                Priority priority,
+                boolean secret,
+                Double measurement,
+                BigDecimal temperature,
+                LocalDateTime sendTime
     ) {
         this.message = message;
         this.priority = priority;
         this.secret = secret;
         this.measurement = measurement;
+        this.temperature = temperature;
         this.sendTime = sendTime;
     }
 }
