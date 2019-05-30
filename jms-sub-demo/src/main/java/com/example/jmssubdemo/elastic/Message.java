@@ -1,20 +1,23 @@
-package com.example.jmssubdemo.subscriber;
+package com.example.jmssubdemo.elastic;
 
 import com.example.jmssubdemo.subscriber.dto.MessageDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Document(indexName = "measurements", type = "measurement")
 class Message {
 
     @Id
@@ -26,7 +29,7 @@ class Message {
     private BigDecimal temperature;
     private LocalDateTime sendTime;
 
-    Message(MeasurementsMsg receivedMsg) {
+    Message(MessageDto receivedMsg) {
         this.uuid = UUID.randomUUID();
         this.message = receivedMsg.getMessage();
         this.priority = receivedMsg.getPriority();
@@ -34,17 +37,5 @@ class Message {
         this.measurement = receivedMsg.getMeasurement();
         this.temperature = receivedMsg.getTemperature();
         this.sendTime = receivedMsg.getSendTime();
-    }
-
-    MessageDto toDto() {
-        return new MessageDto(
-                this.uuid,
-                this.message,
-                this.priority,
-                this.secret,
-                this.measurement,
-                this.temperature,
-                this.sendTime
-        );
     }
 }
