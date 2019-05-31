@@ -43,6 +43,16 @@ class Message {
         this.sendTime = convertToDate(receivedMsg.getSendTime());
     }
 
+    Message(MeasurementsReceivedEvent event) {
+        this.uuid = UUID.randomUUID();
+        this.message = event.getMessage();
+        this.priority = event.getPriority();
+        this.secret = event.isSecret();
+        this.measurement = event.getMeasurement();
+        this.temperature = event.getTemperature();
+        this.sendTime = convertToDate(event.getSendTime());
+    }
+
     private Date convertToDate(LocalDateTime sendTime) {
         return java.sql.Timestamp.valueOf(sendTime);
     }
