@@ -1,4 +1,4 @@
 # jms-apps
-run docker-compose.yml, it will be start rabbit mq
-
-and run jms-pub-demo and jms-sub-demo apps
+1. run docker-compose.yml on jms-pub-demo, it will start rabbit mq
+2. run docker-compose.yml on jms-sub-demo, it will start elasticsearch and kibana
+3. run jms-pub-demo and jms-sub-demo apps
