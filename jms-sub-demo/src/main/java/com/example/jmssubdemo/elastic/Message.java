@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -27,7 +30,8 @@ class Message {
     private boolean secret;
     private Double measurement;
     private BigDecimal temperature;
-    private LocalDateTime sendTime;
+    @Field(type = FieldType.Date, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    private Date sendTime;
 
     Message(MessageDto receivedMsg) {
         this.uuid = UUID.randomUUID();
@@ -36,6 +40,10 @@ class Message {
         this.secret = receivedMsg.isSecret();
         this.measurement = receivedMsg.getMeasurement();
         this.temperature = receivedMsg.getTemperature();
-        this.sendTime = receivedMsg.getSendTime();
+        this.sendTime = convertToDate(receivedMsg.getSendTime());
+    }
+
+    private Date convertToDate(LocalDateTime sendTime) {
+        return java.sql.Timestamp.valueOf(sendTime);
     }
 }
